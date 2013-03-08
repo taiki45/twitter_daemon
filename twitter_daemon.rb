@@ -53,6 +53,7 @@ module TwitterDaemon
 
         stream.on_max_reconnects do |timeout, retries|
           puts "max reconnected. timeout: #{timeout}, retries: #{retries}"
+          sleep 60 * 15
         end
       end
     end
