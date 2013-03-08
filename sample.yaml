@@ -1,8 +1,10 @@
+service:
+  'Twitter'
 consumer_key:
   'XXXX'
 consumer_secret:
   'XXXX'
-oauth_token:
+access_key:
   'XXXX'
-oauth_token_secret:
+access_secret:
   'XXXX'
