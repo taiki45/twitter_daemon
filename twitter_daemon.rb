@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 require 'yaml'
 require 'twitter'
+
+$LOAD_PATH.unshift File.expand_path('../lib/chatroid/lib', __FILE__)
 require 'chatroid'
 
 require 'pry'
@@ -40,6 +42,14 @@ module TwitterDaemon
     end
 
     def on_tweet(event)
+    end
+
+    def on_favorite(event)
+      p event["target"]
+    end
+
+    def on_favorite_other(event)
+      p event["target"]
     end
   end
 end
