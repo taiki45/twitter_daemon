@@ -1,13 +1,27 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    avalon (0.0.3)
+    chatroid (0.1.2)
+      avalon
+      tinder
+      twitter-stream
+      twitter_oauth
+      xmpp4r
+      zircon
     coderay (1.0.9)
     eventmachine (1.0.1)
     faraday (0.8.6)
       multipart-post (~> 1.1)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
+    hashie (1.2.0)
+    json (1.7.7)
     method_source (0.8.1)
+    mime-types (1.21)
     multi_json (1.6.1)
     multipart-post (1.2.0)
+    oauth (0.4.7)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -15,6 +29,15 @@ GEM
     roauth (0.0.8)
     simple_oauth (0.2.0)
     slop (3.4.3)
+    tinder (1.9.2)
+      eventmachine (~> 1.0)
+      faraday (~> 0.8)
+      faraday_middleware (~> 0.9)
+      hashie (~> 1.0)
+      json (~> 1.7.5)
+      mime-types (~> 1.19)
+      multi_json (~> 1.5)
+      twitter-stream (~> 0.1)
     twitter (4.5.0)
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
@@ -22,12 +45,17 @@ GEM
     twitter-stream (0.1.12)
       eventmachine (>= 0.12.8)
       roauth (>= 0.0.2)
+    twitter_oauth (0.4.4)
+      json (>= 1.1.9)
+      mime-types (>= 1.16)
+      oauth (>= 0.4.1)
+    xmpp4r (0.5)
+    zircon (0.0.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  chatroid
   pry
-  simple_oauth (~> 0.2)
   twitter
-  twitter-stream

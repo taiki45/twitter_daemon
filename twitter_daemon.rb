@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-require 'json'
 require 'yaml'
-require 'twitter/json_stream'
 require 'twitter'
+require 'chatroid'
+
+require 'pry'
 
 module TwitterDaemon
   class << self
@@ -14,64 +15,31 @@ module TwitterDaemon
       File.expand_path('../config.yaml', __FILE__)
     end
 
-    def client
-      @client ||= Client.new(config)
-    end
-
     def run!
       Signal.trap :INT do
         puts "\nexitting.."
-        exit 0
+        exit
       end
-
       puts 'starting...'
-      start_stream
-    end
-
-    def start_stream
-      EventMachine::run do
-        stream = Twitter::JSONStream.connect(
-          host: 'userstream.twitter.com',
-          path: '/1.1/user.json',
-          port: 443,
-          ssl: true,
-          oauth: {
-            consumer_key: config[:consumer_key],
-            consumer_secret: config[:consumer_secret],
-            access_key: config[:oauth_token],
-            access_secret: config[:oauth_token_secret]
-          }
-        )
-
-        stream.each_item do |json|
-          client.respond JSON.parse(json), json
-        end
-
-        stream.on_error do |message|
-          puts message
-        end
-
-        stream.on_max_reconnects do |timeout, retries|
-          puts "max reconnected. timeout: #{timeout}, retries: #{retries}"
-          sleep 60 * 15
-        end
-      end
+      Client.new.register!.run!
     end
   end
 
-  class Client
-    def initialize(config)
-      @client = Twitter::Client.new config
+  class Client < Chatroid
+    def initialize
+      TwitterDaemon.config.each do |key, val|
+        set key, val
+      end
     end
 
-    def respond(event, json)
-      __send__ 'on_' + event['event'], event, json
+    def register!
+      methods.each do |name|
+        callbacks[$1] << method(name).to_proc if name =~ /^on_(?!time)(.+)$/
+      end
+      self
     end
 
-    def on_favorite(event, json)
-    end
-
-    def on_unfavorite(event, json)
+    def on_tweet(event)
     end
   end
 end
