@@ -46,6 +46,10 @@ module TwitterDaemon
       store.save event
     end
 
+    def on_unknown(event)
+      p event
+    end
+
     def on_favorite(event)
       store.favorite event["target_object"]["id"]
       p 'favorited'
@@ -97,11 +101,15 @@ module TwitterDaemon
     end
 
     def favorite(id)
-        collection.update({"id" => id}, {op_of(target) => {"favorite_count" => 1}}) if target = find_by(id)
+      if target = find_by(id)
+        collection.update({"id" => id}, {op_of(target) => {"favorite_count" => 1}})
+      end
     end
 
     def unfavorite(id)
-      collection.update({"id" => id}, {"$inc" => {"favorite_count" => -1}}) if target = find_by(id)
+      if target = find_by(id)
+        collection.update({"id" => id}, {"$inc" => {"favorite_count" => -1}}) if target = find_by(id)
+      end
     end
   end
 end
