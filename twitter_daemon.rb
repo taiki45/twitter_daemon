@@ -88,20 +88,20 @@ module TwitterDaemon
       collection.insert obj
     end
 
-    def favorite_count_of(id)
-      collection.find({"id" => id}).first["favorite_count"]
+    def find_by(id)
+      collection.find({"id" => id}).first
     end
 
-    def op_of(id)
-      favorite_count_of(id) ? "$inc" : "$set"
+    def op_of(target)
+      target["favorite_count"] ? "$inc" : "$set"
     end
 
     def favorite(id)
-      collection.update({"id" => id}, {op_of(id) => {"favorite_count" => 1}})
+        collection.update({"id" => id}, {op_of(target) => {"favorite_count" => 1}}) if target = find_by(id)
     end
 
     def unfavorite(id)
-      collection.update({"id" => id}, {"$inc" => {"favorite_count" => -1}})
+      collection.update({"id" => id}, {"$inc" => {"favorite_count" => -1}}) if target = find_by(id)
     end
   end
 end
