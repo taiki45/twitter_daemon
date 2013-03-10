@@ -27,32 +27,16 @@ module TwitterDaemon
       p event
     end
 
-
-    ##TODO
-    # Save who favorite the tweet
-    # And prevent favorite or unfavorite several times.
     def on_favorite(event)
-      store.favorite event["target_object"]["id"]
+      store.favorite event["target_object"]["id"], event['source']
       p 'favorited'
-      p event["target_object"]["id"]
+      p event["target_object"]["id"], event['source']['screen_name']
     end
 
     def on_favorite_other(event)
-      store.favorite event["target_object"]["id"]
+      store.favorite event["target_object"]["id"], event['source']
       p 'favorited other'
-      p event["target_object"]["id"]
-    end
-
-    def on_unfavorite(event)
-      store.unfavorite event["target_object"]["id"]
-      p 'unfavorited'
-      p event["target_object"]["id"]
-    end
-
-    def on_unfavorite_other(event)
-      store.unfavorite event["target_object"]["id"]
-      p 'unfavorited other'
-      p event["target_object"]["id"]
+      p event["target_object"]["id"], event['source']['screen_name']
     end
   end
 end

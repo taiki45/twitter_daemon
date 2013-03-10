@@ -4,12 +4,8 @@ module TwitterDaemon
       @client ||= Mongo::MongoClient.new
     end
 
-    def db
-      @db ||= client.db('tweeamon')
-    end
-
     def collection
-      @collection ||= db.collection('tweets')
+      @collection ||= client.db('tweeamon').collection('tweets')
     end
 
     def save(obj)
@@ -20,19 +16,14 @@ module TwitterDaemon
       collection.find({"id" => id}).first
     end
 
-    def op_of(target)
-      target["favorite_count"] ? "$inc" : "$set"
-    end
-
-    def favorite(id)
-      if target = find_by(id)
-        collection.update({"id" => id}, {op_of(target) => {"favorite_count" => 1}})
-      end
-    end
-
-    def unfavorite(id)
-      if target = find_by(id)
-        collection.update({"id" => id}, {"$inc" => {"favorite_count" => -1}}) if target = find_by(id)
+    def favorite(id, source)
+      if tweet = find_by(id)
+        if !(tweet["favorite_users"]) || (tweet["favorite_users"] && !(tweet["favorite_users"].map {|source| source["id"] }.include?(source["id"])))
+          collection.update(
+            {"id" => id},
+            {"$inc" => {"favorite_count" => 1}, "$push" => {"favorite_users" => source}}
+          )
+        end
       end
     end
   end
