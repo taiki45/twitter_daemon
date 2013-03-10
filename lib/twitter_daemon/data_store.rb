@@ -28,7 +28,7 @@ module TwitterDaemon
       end
 
       def favorited?
-        @raw["favorite_count"] and @raw["favorite_users"]
+        @raw and @raw["favorite_count"] and @raw["favorite_users"]
       end
 
       def favorited_by(user)
@@ -40,11 +40,11 @@ module TwitterDaemon
       end
 
       def method_missing(name, *args)
-        raw.send(name, *args)
+        @raw.send name, *args
       end
 
       def respond_to_missing?(name, include_private)
-        raw.respond_to_missing? name, include_private
+        @raw.respond_to_missing? name, include_private
       end
     end
   end
