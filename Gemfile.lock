@@ -3,6 +3,8 @@ GEM
   specs:
     avalon (0.0.3)
     bson (1.8.3)
+    bson_ext (1.8.2)
+      bson (~> 1.8.2)
     chatroid (0.1.2)
       avalon
       tinder
@@ -56,6 +58,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   chatroid
   mongo
   pry
