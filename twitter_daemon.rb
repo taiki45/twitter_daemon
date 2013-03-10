@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'yaml'
-require 'twitter'
 require 'mongo'
 
 $LOAD_PATH.unshift File.expand_path('../lib/chatroid/lib', __FILE__)
