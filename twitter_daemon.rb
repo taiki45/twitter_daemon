@@ -22,7 +22,7 @@ module TwitterDaemon
 
     def run!
       puts 'starting...'
-      Client.new.register!.run!
+      Client.new(config).register!.run!
     end
   end
 end

@@ -2,10 +2,8 @@
 
 module TwitterDaemon
   class Client < Chatroid
-    def initialize
-      TwitterDaemon.config.each do |key, val|
-        set key, val
-      end
+    def initialize(config)
+      config.each {|key, val| set key, val }
     end
 
     def store
