@@ -4,8 +4,12 @@ module TwitterDaemon
       @client ||= Mongo::MongoClient.new
     end
 
+    def config
+      TwitterDaemon.datastore_conf
+    end
+
     def collection
-      @collection ||= client.db('tweeamon').collection('tweets')
+      @collection ||= client.db(config[:database_name]).collection('tweets')
     end
 
     def save(obj)
