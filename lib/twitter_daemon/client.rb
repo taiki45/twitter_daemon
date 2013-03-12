@@ -21,20 +21,12 @@ module TwitterDaemon
       store.save event
     end
 
-    def on_unknown(event)
-      p event
-    end
-
     def on_favorite(event)
       store.favorite event["target_object"]["id"], event['source']
-      p 'favorited'
-      p event["target_object"]["id"], event['source']['screen_name']
     end
 
     def on_favorite_other(event)
       store.favorite event["target_object"]["id"], event['source']
-      p 'favorited other'
-      p event["target_object"]["id"], event['source']['screen_name']
     end
   end
 end
