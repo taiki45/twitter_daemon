@@ -8,8 +8,12 @@ module TwitterDaemon
       TwitterDaemon.datastore_conf
     end
 
+    def db
+      client.db(config[:database_name])
+    end
+
     def collection
-      @collection ||= client.db(config[:database_name]).collection('tweets')
+      @collection ||= db.collection('tweets')
     end
 
     def save(obj)
