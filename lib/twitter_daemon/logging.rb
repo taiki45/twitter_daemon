@@ -2,20 +2,21 @@
 
 module TwitterDaemon
   module Logging
-    class << self
-      def logger
-        @logger ||= Logger.new
-      end
+    def self.logger
+      @logger ||= Logger.new
     end
 
     %w(info debug warn error fatal).each do |name|
+      logging = self
       define_method(name) do |*args|
-        self.class.logger.__send__(name, *args)
+        logging.logger.__send__(name, *args)
       end
     end
 
     class Logger
       def initialize
+        @logger = ::Logger.new(STDOUT)
+        @logger.level = ::Logger::DEBUG if debug?
       end
 
       def daemon?
@@ -31,18 +32,23 @@ module TwitterDaemon
       end
 
       def info(obj)
+        @logger.info(obj)
       end
 
       def debug(obj)
+        @logger.debug(obj)
       end
 
       def warn(obj)
+        @logger.warn(obj)
       end
 
       def error(obj)
+        @logger.error(obj)
       end
 
       def fatal(obj)
+        @logger.fatal(obj)
       end
     end
   end

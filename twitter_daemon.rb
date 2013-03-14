@@ -8,6 +8,7 @@ $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'chatroid'
 require 'twitter_daemon/client'
 require 'twitter_daemon/data_store'
+require 'twitter_daemon/logging'
 
 module TwitterDaemon
   CLIENT_CONF = %w(
@@ -15,6 +16,8 @@ module TwitterDaemon
   ).map {|e| e.to_sym }.freeze
 
   class << self
+    include Logging
+
     def config
       @config ||= Hash[YAML.load_file(path).map {|k, v| [k.to_sym, v] }]
     end
@@ -32,7 +35,7 @@ module TwitterDaemon
     end
 
     def run!
-      puts 'starting...'
+      info 'starting service...'
       Client.new(client_conf).register!.run!
     end
   end
