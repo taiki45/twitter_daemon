@@ -26,12 +26,12 @@ module TwitterDaemon
 
     def on_favorite(event)
       store.favorite event["target_object"]["id"], event['source']
-      info "favorited by #{event['source']['user']['screen_name']}"
+      info "favorited by #{event['source']['screen_name']}"
     end
 
     def on_favorite_other(event)
       store.favorite event["target_object"]["id"], event['source']
-      info "favorited #{event['target_object']['user']['screen_name']}"
+      info "favorited #{event['target_object']['screen_name']}"
     end
   end
 end
