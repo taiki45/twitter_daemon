@@ -2,6 +2,8 @@
 
 module TwitterDaemon
   class Client < Chatroid
+    include Logging
+
     def initialize(config)
       config.each {|key, val| set key, val }
     end
@@ -19,14 +21,17 @@ module TwitterDaemon
 
     def on_tweet(event)
       store.save event
+      info "saved #{event['user']['screen_name']}"
     end
 
     def on_favorite(event)
       store.favorite event["target_object"]["id"], event['source']
+      info "favorited by #{event['source']['user']['screen_name']}"
     end
 
     def on_favorite_other(event)
       store.favorite event["target_object"]["id"], event['source']
+      info "favorited #{event['target_object']['user']['screen_name']}"
     end
   end
 end

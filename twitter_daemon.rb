@@ -3,12 +3,12 @@ require 'logger'
 require 'yaml'
 require 'mongo'
 
+require 'pry'
+
 $LOAD_PATH.unshift File.expand_path('../lib/chatroid/lib', __FILE__)
 $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'chatroid'
-require 'twitter_daemon/client'
-require 'twitter_daemon/data_store'
-require 'twitter_daemon/logging'
+require 'twitter_daemon'
 
 module TwitterDaemon
   CLIENT_CONF = %w(
