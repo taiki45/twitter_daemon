@@ -21,7 +21,6 @@ module TwitterDaemon
 
     def on_tweet(event)
       store.save event
-      info "saved #{event['user']['screen_name']}"
     end
 
     def on_favorite(event)

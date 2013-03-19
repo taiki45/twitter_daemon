@@ -36,7 +36,13 @@ module TwitterDaemon
 
     def run!
       info 'starting service...'
-      Client.new(client_conf).register!.run!
+      loop do
+        begin
+          Client.new(client_conf).register!.run!
+        rescue => e
+          fatal e
+        end
+      end
     end
   end
 end
