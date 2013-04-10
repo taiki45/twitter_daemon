@@ -5,7 +5,7 @@ module TwitterDaemon
     include Logging
 
     def initialize(config)
-      config.each {|key, val| set key, val }
+      config.each { |key, val| set key, val }
     end
 
     def store
@@ -24,12 +24,12 @@ module TwitterDaemon
     end
 
     def on_favorite(event)
-      store.favorite event["target_object"]["id"], event['source']
+      store.favorite(event["target_object"]["id"], event['source'])
       info "favorited by #{event['source']['screen_name']}"
     end
 
     def on_favorite_other(event)
-      store.favorite event["target_object"]["id"], event['source']
+      store.favorite(event["target_object"]["id"], event['source'])
       info "favorited #{event['target_object']['screen_name']}"
     end
   end

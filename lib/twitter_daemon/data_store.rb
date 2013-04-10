@@ -24,8 +24,8 @@ module TwitterDaemon
       doc = Document.new(collection.find({"id" => id}).first)
       unless doc.nil? or doc.favorited_by(source)
         collection.update(
-          {"id" => id},
-          {"$inc" => {"favorite_count" => 1}, "$push" => {"favorite_users" => source}}
+          { "id" => id },
+          { "$inc" => { "favorite_count" => 1 }, "$push" => { "favorite_users" => source } }
         )
       end
     end
