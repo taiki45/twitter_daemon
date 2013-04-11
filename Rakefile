@@ -7,7 +7,12 @@ $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'chatroid'
 require 'twitter_daemon'
 
+task :default do
+  puts `rake -T`
+end
+
 namespace :db do
+  desc "add indexes for your database collection"
   task :create_index do
     puts "adding indexes..."
 
