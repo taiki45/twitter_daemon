@@ -17,10 +17,7 @@ namespace :db do
     puts "adding indexes..."
 
     store = TwitterDaemon::DataStore.new
-    store.collection.ensure_index(
-      {"id" => 1},
-      {"unique" => true, "dropDups" => true}
-    )
+    store.collection.ensure_index({"id" => 1})
     store.collection.ensure_index({"user.id" => 1})
 
     puts "done!"
